@@ -5,7 +5,7 @@
  */
 namespace StoreEngine;
 
-class FileModel implements FileModelInterface {
+class FileModel {
     protected $providers;
     
     public function __construct() {

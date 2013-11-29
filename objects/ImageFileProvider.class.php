@@ -21,7 +21,7 @@ class ImageFileProvider extends FileProvider implements FileProviderInterface {
         }
     }
 
-    public function __construct(FileModelInterface $model) {
+    public function __construct(FileModel $model) {
         parent::__construct($model);
     }
 
