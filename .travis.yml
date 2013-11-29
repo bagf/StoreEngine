@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 5.5
+
+env:
+  - DB=mysql
+
+before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS storeengine;'
+  - mysql < MySQL/full/0.1b_29_11_2013.sql
+  - sudo pear channel-discover pear.phpunit.de
+  - sudo pear install phpunit/PHPUnit
+  - mkdir vendor
+  - git clone git://github.com/stormsrc/storm-development-library.git -b master vendor/Storm
+
+script: phpunit --configuration tests/phpunit.xml
