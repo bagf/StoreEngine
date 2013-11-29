@@ -34,7 +34,7 @@ class FileModelFactory {
      * 
      * @return \StoreEngine\FileModel
      */
-    private function get() {
+    public function get() {
         
         return $this->createModel();
     }
