@@ -11,29 +11,24 @@ class FileProvider implements FileProviderInterface {
 
     public function get($limitFrom, $limitTo) {
         $results = array();
-        /*
-         * @todo Fetch from database table
-         * while($r = $f->fetch()) {
-         *     $results[] = $this->marshalResultset($r);
-         * }
-         */
+        $f = \storm\PSQL::query("SELECT * FROM `files` WHERE `parentID` = ?", "StoreEngineDB", array($this->model->getParentID()));
+        while($r = $f->fetch()) {
+            $results[] = $this->marshalResultset($r);
+        }
+        
         return $results;
     }
     
     public function count() {
-        $result = 0;
-        /*
-         * @todo Fetch from database table
-         * $r = $f->fetch();
-         * $result = $r['total'];
-         */
-        return $result;
+        $f = \storm\PSQL::query("SELECT COUNT(`fileID`) AS count FROM `files` WHERE `parentID` = ?", "StoreEngineDB", array($this->model->getParentID()));
+        $r = $f->fetch();
+        return $f['count'];
     }
     
     public function marshalResultset($resultset) {
         // note providerOb serves as the providers unique id
         if ($resultset['providerOb'] == get_class($this)) {
-            return new File($resultset['id'], $resultset['name'], $resultset['size'], $resultset['mime']);
+            return new File($resultset['fileID'], $resultset['name'], $resultset['size'], $resultset['mime']);
         } else {
             // Try to get provider
             try {
@@ -47,6 +42,7 @@ class FileProvider implements FileProviderInterface {
                 $provider = new $newProvider($this->model);
                 $this->model->addFileProvider($provider);
             }
+            return $provider->marshalResultset($resultset);
         }
     }
 
