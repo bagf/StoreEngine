@@ -31,7 +31,7 @@ class ImageFileProvider extends FileProvider implements FileProviderInterface {
     public function marshalResultset($resultset) {
         // note providerOb serves as the providers unique id
         if ($resultset['providerOb'] == get_class($this)) {
-            return new File($resultset['id'], $resultset['name'], $resultset['size'], $resultset['mime']);
+            return new ImageFile($resultset['fileID'], $resultset['name'], $resultset['size'], $resultset['mime']);
         }
     }
 
