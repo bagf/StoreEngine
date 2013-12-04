@@ -10,6 +10,7 @@ class FileModel {
     protected $rootProvider;
     
     protected $files;
+    protected $parentID;
 
 
     public function __construct() {
@@ -17,6 +18,7 @@ class FileModel {
         $this->rootProvider = null;
         
         $this->files = [];
+        $this->parentID = 0;
     }
 
     public function addFileProvider(FileProviderInterface $provider) {
@@ -58,5 +60,13 @@ class FileModel {
     
     public function count() {
         return $this->files = $this->getRootFileProvider()->count();
+    }
+    
+    public function setParent($parent) {
+        $this->parentID = $parent;
+    }
+    
+    public function getParentID() {
+        return $this->parentID;
     }
 }
