@@ -7,7 +7,7 @@
         <var name="db_name" value="storeengine" />
         <var name="db_port" value="3306"/>
         
-        <var name="lib_storm" value="'/../../vendor/Storm/autoloader.php'"/>
+        <var name="lib_storm" value="'/../vendor/Storm/autoloader.php'"/>
     </php>
     <testsuites>
         <testsuite name="StoreEngine Basic Test Suite">
