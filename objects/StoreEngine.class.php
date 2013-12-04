@@ -13,14 +13,14 @@ class StoreEngine {
         static::$paths[] = array("class" => $class, "path" => $path);
     }
 
-    private static function findClass($class_name, $directory) {
+    private static function findClass($class_name, $class, $directory) {
         $di = new \DirectoryIterator($directory);
         foreach($di as $d) {
             if ($d->isDot()) continue;
-            if ($d->isFile() && $d->getFilename() == "{$class_name}.php") {
+            if ($d->isFile() && $d->getFilename() == sprintf($class, $class_name)) {
                 return $d->getPathname();
             } else if ($d->isDir()) {
-                $recResult = self::findClass($class_name, $d->getPathname());
+                $recResult = self::findClass($class_name, $class, $d->getPathname());
                 if ($recResult !== false) {
                         return $recResult;
                 }
@@ -30,8 +30,9 @@ class StoreEngine {
     }
 
     public static function autoload($class_name) {
-        foreach($paths as $path) {
-            $result = static::findClass($path['class'], $path['path']);
+        $class_name = str_replace(__NAMESPACE__."\\", '', $class_name);
+        foreach(self::$paths as $path) {
+            $result = static::findClass($class_name, $path['class'], $path['path']);
             if ($result !== false) {
                 require_once($result);
                 return true;
@@ -42,11 +43,10 @@ class StoreEngine {
     }
 
     public static function registerAutoloader() {
-        $class_name = str_replace(__NAMESPACE__."\\", '', $class_name);
-        static::addClassPath("{$class_name}.class", __DIR__."/");
-        static::addClassPath("{$class_name}.class", __DIR__."/factories/");
-        static::addClassPath("{$class_name}.interface", __DIR__."/interfaces/");
-        static::addClassPath("{$class_name}.trait", __DIR__."/traits/");
+        static::addClassPath("%s.class.php", __DIR__."/");
+        static::addClassPath("%s.class.php", __DIR__."/../factories/");
+        static::addClassPath("%s.interface.php", __DIR__."/../interfaces/");
+        static::addClassPath("%s.trait.php", __DIR__."/../traits/");
         spl_autoload_register(__CLASS__ ."::autoload");
     }
 }
