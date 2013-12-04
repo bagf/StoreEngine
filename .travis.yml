@@ -9,6 +9,7 @@ env:
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS storeengine;'
   - mysql < MySQL/full/0.1b_29_11_2013.sql
+  - sudo pear channel-discover pear.symfony.com
   - sudo pear channel-discover pear.phpunit.de
   - sudo pear install phpunit/PHPUnit
   - mkdir vendor
