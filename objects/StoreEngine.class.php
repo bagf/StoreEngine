@@ -49,4 +49,12 @@ class StoreEngine {
         static::addClassPath("%s.trait.php", __DIR__."/../traits/");
         spl_autoload_register(__CLASS__ ."::autoload");
     }
+    
+    public function __construct() {
+        
+    }
+    
+    public function getFilePath(File $file) {
+        return \storm\Configuration::fetchFirstConfiguration("StoreEngineConfiguration")->getFilesPath()."/".$file->getID();
+    }
 }
