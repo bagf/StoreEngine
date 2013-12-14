@@ -8,6 +8,24 @@ namespace StoreEngine;
 class StoreEngine {
     
     protected static $paths = array();
+    protected static $instance = null;
+    
+    public static function &get() {
+        if (!is_null(static::$instance)) {
+            return static::$instance;
+        }
+        
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            if (!isset($_SESSION['StoreEngine'])) {
+                $_SESSION['StoreEngine'] = new StoreEngine();
+            }
+            static::$instance = $_SESSION['StoreEngine'];
+            return static::$instance;
+        }
+        
+        static::$instance = new StoreEngine();
+        return static::$instance;
+    }
 
     protected static function addClassPath($class, $path) {
         static::$paths[] = array("class" => $class, "path" => $path);
