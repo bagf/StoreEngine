@@ -9,16 +9,21 @@ class FileModel {
     protected $providers;
     protected $rootProvider;
     
-    protected $files;
     protected $parentID;
+    protected $limitFrom;
+    protected $limitTo;
+    protected $fileID;
 
 
     public function __construct() {
         $this->providers = [];
         $this->rootProvider = null;
         
-        $this->files = [];
+        // Defaults
         $this->parentID = 0;
+        $this->limitFrom = 0;
+        $this->limitTo = 1;
+        $this->fileID = null;
     }
 
     public function addFileProvider(FileProviderInterface $provider) {
@@ -53,20 +58,39 @@ class FileModel {
         return $this->providers[$this->rootProvider];
     }
     
-    public function get($from, $to) {
-        $this->files = $this->getRootFileProvider()->get($from, $to);
-        return $this->files;
+    public function get() {
+        return $this->getRootFileProvider()->get();
     }
     
     public function count() {
-        return $this->files = $this->getRootFileProvider()->count();
+        return $this->getRootFileProvider()->count();
     }
     
     public function setParent($parent) {
         $this->parentID = $parent;
     }
     
+    public function setLimit($limitForm, $limitTo) {
+        $this->limitFrom = $limitForm;
+        $this->limitTo = $limitTo;
+    }
+    public function setFileID($fileID) {
+        $this->fileID = $fileID;
+    }
+    
     public function getParentID() {
         return $this->parentID;
+    }
+    
+    public function getFromLimit() {
+        return $this->limitFrom;
+    }
+    
+    public function getToLimit() {
+        return $this->limitTo;
+    }
+    
+    public function getFileID() {
+        return $this->fileID;
     }
 }

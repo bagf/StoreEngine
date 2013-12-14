@@ -14,6 +14,10 @@ class DownloadSessionFactory extends SessionFactory {
         $this -> file = $file;
     }
     
+    /**
+     * 
+     * @return \StoreEngine\DownloadSession
+     */
     public function get() {
         $newSession = new DownloadSession($this->getStoreEngine());
         $newSession->setFile($this->file);

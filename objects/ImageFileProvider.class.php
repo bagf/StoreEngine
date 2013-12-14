@@ -7,7 +7,7 @@ namespace StoreEngine;
 
 class ImageFileProvider extends FileProvider implements FileProviderInterface {
     
-    public function get($limitFrom, $limitTo) {
+    public function get() {
         $results = array();
         /*
          * @todo Fetch from database table

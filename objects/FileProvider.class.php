@@ -9,9 +9,19 @@ class FileProvider implements FileProviderInterface {
 
     protected $model;
 
-    public function get($limitFrom, $limitTo) {
+    public function get() {
         $results = array();
-        $f = \storm\PSQL::query("SELECT * FROM `files` WHERE `parentID` = ?", "StoreEngineDB", array($this->model->getParentID()));
+        $f = \storm\PSQL::query(""
+                . "SELECT * "
+                . "FROM `files` "
+                . "WHERE `parentID` = :parentID "
+                . "AND IF(:fileID IS NULL, TRUE, `fileID` = :fileID) "
+                . "LIMIT :limitFrom, :limitTo", "StoreEngineDB", [
+            ":parentID" => $this->model->getParentID(),
+            ":fileID" => $this->model->getFileID(),
+            ":limitFrom" => $this->model->getFromLimit(),
+            ":limitTo" => $this->model->getToLimit()
+        ]);
         while($r = $f->fetch()) {
             $results[] = $this->marshalResultset($r);
         }
