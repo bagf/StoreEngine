@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+    <php>
+        <var name="db_host" value="localhost" />
+        <var name="db_username" value="travis" />
+        <var name="db_password" value="" />
+        <var name="db_name" value="storeengine" />
+        <var name="db_port" value="3306"/>
+        
+        <var name="lib_storm" value="/../vendor/Storm/autoloader.php"/>
+        
+        <var name="store_engine_files_path" value="/files"/>
+    </php>
+    <testsuites>
+        <testsuite name="StoreEngine Basic Test Suite">
+            <directory>./basic</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

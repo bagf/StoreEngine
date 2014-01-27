@@ -22,11 +22,20 @@ class FileModelFactory {
      * 
      * @return \StoreEngine\FileModel
      */
-    public function createModel() {
+    private function createModel() {
         $model = new FileModel();
         $provider = new FileProvider($model);
         $model->addFileProvider($provider);
         
         return $model;
+    }
+    
+    /**
+     * 
+     * @return \StoreEngine\FileModel
+     */
+    public function get() {
+        
+        return $this->createModel();
     }
 }
